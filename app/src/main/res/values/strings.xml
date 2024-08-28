@@ -2,4 +2,10 @@
     <string name="app_name">Speed Test App</string>
     <string name="title_test">Speed Test</string>
     <string name="title_settings">Settings</string>
+    <string name="start_speed_test">Начать тест скорости</string>
+    <string name="upload_text_view">Отдача</string>
+    <string name="download_text_view">Загрузка</string>
+    <string name="speed_text_view">МБит/c</string>
+    <string name="inst_text_view">Мгновенная скорость</string>
+    <string name="average_text_view">Средняя скорость</string>
 </resources>
