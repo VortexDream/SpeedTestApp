@@ -38,6 +38,7 @@
         android:layout_height="wrap_content"
         android:text="@string/speed_text_view"
         android:textSize="14sp"
+        android:layout_marginStart="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/upload_text_view"
         app:layout_constraintStart_toEndOf="@+id/upload_text_view"
         app:layout_constraintTop_toTopOf="@+id/upload_text_view" />
@@ -78,6 +79,7 @@
         android:layout_height="wrap_content"
         android:text="@string/speed_text_view"
         android:textSize="14sp"
+        android:layout_marginStart="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/download_text_view"
         app:layout_constraintStart_toEndOf="@+id/download_text_view"
         app:layout_constraintTop_toTopOf="@+id/download_text_view" />
@@ -88,8 +90,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/inst_text_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/inst_download_speed"
+        app:layout_constraintStart_toStartOf="@+id/inst_upload_speed"
         app:layout_constraintTop_toBottomOf="@+id/upload_text_view" />
 
     <TextView
@@ -122,8 +124,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/average_text_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/average_download_speed"
+        app:layout_constraintStart_toStartOf="@+id/average_upload_speed"
         app:layout_constraintTop_toBottomOf="@+id/inst_download_speed" />
 
     <TextView
@@ -156,7 +158,7 @@
         android:layout_height="wrap_content"
         android:text="@string/start_speed_test"
         android:paddingVertical="16dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="56dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
