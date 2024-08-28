@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Speed Test App</string>
+    <string name="title_test">Speed Test</string>
+    <string name="title_settings">Settings</string>
+</resources>
