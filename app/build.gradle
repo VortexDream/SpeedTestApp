@@ -86,4 +86,8 @@ dependencies {
     // Dagger Hilt
     implementation ("com.google.dagger:hilt-android:2.48.1")
     ksp ("com.google.dagger:hilt-compiler:2.48.1")
+
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+
+    implementation("fr.bmartel:jspeedtest:1.32.1")
 }

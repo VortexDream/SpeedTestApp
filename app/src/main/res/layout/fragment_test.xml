@@ -8,6 +8,28 @@
     android:gravity="center"
     tools:context=".ui.test.TestFragment">
 
+    <TextView
+        android:id="@+id/download_url_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TEST URL"
+        android:layout_margin="16dp"
+        android:textSize="14sp"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/upload_url_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TEST URL"
+        android:layout_margin="16dp"
+        android:textSize="14sp"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/download_url_textview" />
+
     <ImageView
         android:id="@+id/ic_upload"
         android:layout_width="32dp"
@@ -43,13 +65,6 @@
         app:layout_constraintStart_toEndOf="@+id/upload_text_view"
         app:layout_constraintTop_toTopOf="@+id/upload_text_view" />
 
-    <Space
-        android:id="@+id/space"
-        android:layout_width="40dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/speed_text_view_1"
-        app:layout_constraintStart_toEndOf="@+id/speed_text_view_1"
-        app:layout_constraintTop_toTopOf="@+id/speed_text_view_1" />
 
     <ImageView
         android:id="@+id/ic_download"
@@ -59,9 +74,9 @@
         android:cropToPadding="true"
         android:scaleType="centerInside"
         android:src="@drawable/ic_download"
-        app:layout_constraintBottom_toBottomOf="@+id/space"
-        app:layout_constraintStart_toEndOf="@+id/space"
-        app:layout_constraintTop_toTopOf="@+id/space" />
+        app:layout_constraintBottom_toBottomOf="@+id/speed_text_view_1"
+        app:layout_constraintEnd_toStartOf="@id/download_text_view"
+        app:layout_constraintTop_toTopOf="@+id/speed_text_view_1" />
 
     <TextView
         android:id="@+id/download_text_view"
@@ -70,18 +85,19 @@
         android:text="@string/download_text_view"
         android:textAppearance="?attr/textAppearanceHeadline6"
         app:layout_constraintBottom_toBottomOf="@+id/ic_download"
-        app:layout_constraintStart_toEndOf="@+id/ic_download"
+        app:layout_constraintEnd_toStartOf="@+id/speed_text_view_2"
         app:layout_constraintTop_toTopOf="@+id/ic_download" />
 
     <TextView
         android:id="@+id/speed_text_view_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/speed_text_view"
         android:textSize="14sp"
-        android:layout_marginStart="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/download_text_view"
-        app:layout_constraintStart_toEndOf="@+id/download_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/download_text_view" />
 
     <TextView
@@ -162,4 +178,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/visibility_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="average_download_speed,
+        average_upload_speed,
+        average_text_view,
+        inst_download_speed,
+        inst_text_view,
+        inst_upload_speed,
+        speed_text_view_1,
+        speed_text_view_2,
+        download_text_view,ic_download,
+        ic_upload,
+        upload_text_view,
+        download_url_textview,
+        upload_url_textview"
+        android:visibility="invisible"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
