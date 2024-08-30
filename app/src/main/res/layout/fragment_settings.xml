@@ -1,22 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.settings.SettingsFragment">
+    android:orientation="vertical"
+    android:padding="16dp">
 
+    <!-- Темы -->
     <TextView
-        android:id="@+id/text_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/theme"
+        android:textStyle="bold"
+        android:paddingBottom="8dp"/>
+
+    <RadioGroup
+        android:id="@+id/themeRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/radioLight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Светлая"
+            tools:ignore="HardcodedText" />
+
+        <RadioButton
+            android:id="@+id/radioDark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Темная"
+            tools:ignore="HardcodedText" />
+
+        <RadioButton
+            android:id="@+id/radioSystem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Системная"
+            tools:ignore="HardcodedText" />
+
+    </RadioGroup>
+
+    <!-- URL сервера SpeedTest. При необходимости -->
+    <!--<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Speed Test Server URL"
+        android:textStyle="bold"
+        android:paddingTop="16dp"/>
+
+    <EditText
+        android:id="@+id/serverUrlEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:inputType="textUri"
+        android:hint="https://"/>-->
+
+    <!-- Чекбоксы для измерения скорости -->
+    <CheckBox
+        android:id="@+id/downloadCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Измерять скорость загрузки"
+        android:checked="true"
+        android:paddingTop="16dp"
+        tools:ignore="HardcodedText" />
+
+    <CheckBox
+        android:id="@+id/uploadCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="Измерять скорость отдачи"
+        tools:ignore="HardcodedText" />
+
+</LinearLayout>

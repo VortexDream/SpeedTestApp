@@ -1,7 +1,6 @@
 package com.vortex.android.speedtestapp.ui.test
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,24 +13,22 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.snackbar.Snackbar
 import com.vortex.android.speedtestapp.R
 import com.vortex.android.speedtestapp.databinding.FragmentTestBinding
-import fr.bmartel.speedtest.SpeedTestReport
-import fr.bmartel.speedtest.SpeedTestSocket
-import fr.bmartel.speedtest.inter.ISpeedTestListener
-import fr.bmartel.speedtest.model.SpeedTestError
-import kotlinx.coroutines.Dispatchers
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-
-//@AndroidEntryPoint
+//Первый экран приложения, тест скорости происходит здесь
+@AndroidEntryPoint
 class TestFragment : Fragment() {
 
+    //ViewBinding (также проверяем null safety)
     private var _binding: FragmentTestBinding? = null
     private val binding
         get() = checkNotNull(_binding) {
             "Cannot access binding because it is null. Is the view visible?"
         }
-    private val testViewModel: TestViewModel by viewModels()
+    private val testViewModel: TestViewModel by viewModels() //Объявляем вьюмодель
+    //Ссылки на сервера, ссылка на сервер отдачи - заглушка, не работает.
     private val downloadUrl = "http://speedtest.tele2.net/100MB.zip"
     private val uploadUrl = "http://speedtest.karwos.net:8080/speedtest/upload.php"
 
@@ -48,16 +45,19 @@ class TestFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //Подписываемся на ивенты и подрубаем обновление интерфейса
         listenToChannels()
         UpdateUi()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        //Уничтожаем байндинг во избежание утечек памяти
         _binding = null
     }
 
     private fun UpdateUi() {
+        //Четыре корутин снизу отвечают за подписки на обновление интерфейса - числа со значениями скоростей
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 testViewModel.instUploadSpeed.collectLatest {
@@ -87,6 +87,7 @@ class TestFragment : Fragment() {
                 }
             }
         }
+        //Выключаем кнопку начала теста, если тест уже идет
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 testViewModel.isTestOngoing.collectLatest { isTestOngoing ->
@@ -99,30 +100,48 @@ class TestFragment : Fragment() {
         }
 
         binding.apply {
+            //На всякий случай проверяем, был ли хоть раз запущен тест, чтобы не вырубало интерфейс при переходе между фрагментами
             if (testViewModel.buttonWasPushed) {
                 visibilityGroup.isVisible = true
             }
+            //Отображаем адреса на экране
             downloadUrlTextview.text = "Download URL: $downloadUrl"
             uploadUrlTextview.text = "Upload URL: $uploadUrl"
             btnStartTest.setOnClickListener {
-                testViewModel.buttonWasPushed = true
-                visibilityGroup.isVisible = true
-                testViewModel.run {
-                    instUploadSpeed.value = ""
-                    instDownloadSpeed.value = ""
-                    averageUploadSpeed.value = ""
-                    averageDownloadSpeed.value = ""
+                //Выполняем проверку настроек, и в зависимости от значения, запускаем соответствующий этап теста
+                if (testViewModel.downloadPref != null && testViewModel.downloadPref!!) {
+                    testViewModel.buttonWasPushed = true
+                    //Включаем видимость интерфейса только после начала теста
+                    visibilityGroup.isVisible = true
+                    testViewModel.run { //Обнуляем значения скоростей с началом нового теста
+                        instUploadSpeed.value = ""
+                        instDownloadSpeed.value = ""
+                        averageUploadSpeed.value = ""
+                        averageDownloadSpeed.value = ""
+                    }
+                    testViewModel.startDownloadTest() //Запускаем тест загрузки
+                } else if (testViewModel.uploadPref != null && testViewModel.uploadPref!!) {
+                    testViewModel.buttonWasPushed = true
+                    visibilityGroup.isVisible = true
+                    testViewModel.run {
+                        instUploadSpeed.value = ""
+                        instDownloadSpeed.value = ""
+                        averageUploadSpeed.value = ""
+                        averageDownloadSpeed.value = ""
+                    }
+                    testViewModel.startUploadTest() //Запускаем тест отдачи
                 }
-                testViewModel.startDownloadTest()
             }
         }
     }
 
+    //Слушатель событий ошибки. При желании можно расширить на другие события и добавить информацию о видах ошибок внутрь сабклассов
     private fun listenToChannels() {
         viewLifecycleOwner.lifecycleScope.launch {
             testViewModel.allEventsFlow.collect { event ->
                 when(event){
                     is TestViewModel.AllEvents.Error -> {
+                        //Выводим сообщение об ошибке тестирования
                         Snackbar
                             .make(binding.root, getString(R.string.error_empty_password), Snackbar.LENGTH_SHORT)
                             .setAnchorView(binding.btnStartTest)

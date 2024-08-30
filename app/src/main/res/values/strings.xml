@@ -9,4 +9,5 @@
     <string name="inst_text_view">Мгновенная скорость</string>
     <string name="average_text_view">Средняя скорость</string>
     <string name="error_empty_password">Ошибка соединения</string>
+    <string name="theme">Тема</string>
 </resources>
