@@ -1,11 +1,13 @@
 package com.vortex.android.speedtestapp.ui.test
 
 import android.annotation.SuppressLint
+import android.os.CountDownTimer
 import android.util.Log
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vortex.android.speedtestapp.PreferencesRepository
+import com.vortex.android.speedtestapp.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.bmartel.speedtest.SpeedTestReport
 import fr.bmartel.speedtest.SpeedTestSocket
@@ -13,9 +15,11 @@ import fr.bmartel.speedtest.inter.ISpeedTestListener
 import fr.bmartel.speedtest.model.SpeedTestError
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @SuppressLint("DefaultLocale")
@@ -27,6 +31,7 @@ class TestViewModel @Inject constructor(
 
     private val downloadUrl = "http://speedtest.tele2.net/100MB.zip"
     private val uploadUrl = "http://speedtest.karwos.net:8080/speedtest/upload.php"
+    private lateinit var countDownTimer: CountDownTimer
 
     //Создаем канал для прослушивания событий
     private val eventsChannel = Channel<AllEvents>()
@@ -86,6 +91,15 @@ class TestViewModel @Inject constructor(
                 override fun onCompletion(report: SpeedTestReport) {
                     //Выводим среднюю скорость на экран
                     averageDownloadSpeed.value = String.format("%.2f", report.transferRateBit.toDouble()/(1024*1024))
+                    if (instDownloadSpeed.value == "" || instDownloadSpeed.value == "0,00") {
+                        viewModelScope.launch {
+                            eventsChannel.send(AllEvents.Success(R.string.error_connection))
+                        }
+                    } else {
+                        viewModelScope.launch {
+                            eventsChannel.send(AllEvents.Success(R.string.success_download))
+                        }
+                    }
                     //Проверяем настройки, если отключен тест, отдачи, то выходим
                     if (uploadPref != null && uploadPref!!) {
                         startUploadTest()
@@ -111,7 +125,8 @@ class TestViewModel @Inject constructor(
                 }
             })
             //Старт самого теста, выставляем интервал срабатывания onProgress на 200 мс
-            speedTestSocket.startDownload(downloadUrl, 200)
+            //Предел по продолжительности - 15 сек
+            speedTestSocket.startFixedDownload(downloadUrl, 15000, 200)
         }
     }
 
@@ -123,6 +138,15 @@ class TestViewModel @Inject constructor(
             speedTestSocket.addSpeedTestListener(object : ISpeedTestListener {
                 override fun onCompletion(report: SpeedTestReport) {
                     averageUploadSpeed.value = String.format("%.2f", report.transferRateBit.toDouble()/(1024*1024))
+                    if (instUploadSpeed.value == "" || instUploadSpeed.value == "0,00") {
+                        viewModelScope.launch {
+                            eventsChannel.send(AllEvents.Success(R.string.error_connection))
+                        }
+                    } else {
+                        viewModelScope.launch {
+                            eventsChannel.send(AllEvents.Success(R.string.success_upload))
+                        }
+                    }
                     isTestOngoing.value = false
                 }
 
@@ -147,7 +171,7 @@ class TestViewModel @Inject constructor(
     sealed class AllEvents {
         //Viewmodel не должна работать со строками
         //data class Message(@StringRes val messageRes : Int) : AllEvents()
-        //data class ErrorCode(val code : Int): AllEvents()
+        data class Success(@StringRes val successRes : Int): AllEvents()
         data class Error(@StringRes val errorRes : Int) : AllEvents()
     }
 }

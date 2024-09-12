@@ -8,6 +8,8 @@
     <string name="speed_text_view">МБит/c</string>
     <string name="inst_text_view">Мгновенная скорость</string>
     <string name="average_text_view">Средняя скорость</string>
-    <string name="error_empty_password">Ошибка соединения</string>
+    <string name="error_connection">Ошибка соединения</string>
+    <string name="success_download">Тест загрузки завершен успешно</string>
+    <string name="success_upload">Тест отдачи завершен успешно</string>
     <string name="theme">Тема</string>
 </resources>

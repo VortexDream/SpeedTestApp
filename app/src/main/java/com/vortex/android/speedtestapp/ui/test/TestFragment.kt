@@ -143,7 +143,13 @@ class TestFragment : Fragment() {
                     is TestViewModel.AllEvents.Error -> {
                         //Выводим сообщение об ошибке тестирования
                         Snackbar
-                            .make(binding.root, getString(R.string.error_empty_password), Snackbar.LENGTH_SHORT)
+                            .make(binding.root, getString(R.string.error_connection), Snackbar.LENGTH_SHORT)
+                            .setAnchorView(binding.btnStartTest)
+                            .show()
+                    }
+                    is TestViewModel.AllEvents.Success -> {
+                        Snackbar
+                            .make(binding.root, getString(event.successRes), Snackbar.LENGTH_SHORT)
                             .setAnchorView(binding.btnStartTest)
                             .show()
                     }
