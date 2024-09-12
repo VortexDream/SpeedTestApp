@@ -12,10 +12,10 @@
         android:id="@+id/download_url_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
         android:text="TEST URL"
-        android:layout_margin="16dp"
-        android:textSize="14sp"
         android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TEST URL"
-        android:layout_margin="16dp"
+        android:padding="16dp"
         android:textSize="14sp"
         android:textAppearance="?attr/textAppearanceHeadline6"
         app:layout_constraintStart_toStartOf="parent"

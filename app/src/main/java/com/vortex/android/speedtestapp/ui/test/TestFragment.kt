@@ -28,9 +28,6 @@ class TestFragment : Fragment() {
             "Cannot access binding because it is null. Is the view visible?"
         }
     private val testViewModel: TestViewModel by viewModels() //Объявляем вьюмодель
-    //Ссылки на сервера, ссылка на сервер отдачи - заглушка, не работает.
-    private val downloadUrl = "http://speedtest.tele2.net/100MB.zip"
-    private val uploadUrl = "http://speedtest.karwos.net:8080/speedtest/upload.php"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -105,8 +102,8 @@ class TestFragment : Fragment() {
                 visibilityGroup.isVisible = true
             }
             //Отображаем адреса на экране
-            downloadUrlTextview.text = "Download URL: $downloadUrl"
-            uploadUrlTextview.text = "Upload URL: $uploadUrl"
+            downloadUrlTextview.text = "Download URL: ${testViewModel.downloadUrl}"
+            uploadUrlTextview.text = "Upload URL: ${testViewModel.uploadUrl}"
             btnStartTest.setOnClickListener {
                 //Выполняем проверку настроек, и в зависимости от значения, запускаем соответствующий этап теста
                 if (testViewModel.downloadPref != null && testViewModel.downloadPref!!) {
@@ -118,6 +115,8 @@ class TestFragment : Fragment() {
                         instDownloadSpeed.value = ""
                         averageUploadSpeed.value = ""
                         averageDownloadSpeed.value = ""
+                        downloadUrlTextview.text = "Download URL: ${testViewModel.downloadUrl}"
+                        uploadUrlTextview.text = "Upload URL: ${testViewModel.uploadUrl}"
                     }
                     testViewModel.startDownloadTest() //Запускаем тест загрузки
                 } else if (testViewModel.uploadPref != null && testViewModel.uploadPref!!) {
@@ -150,6 +149,12 @@ class TestFragment : Fragment() {
                     is TestViewModel.AllEvents.Success -> {
                         Snackbar
                             .make(binding.root, getString(event.successRes), Snackbar.LENGTH_SHORT)
+                            .setAnchorView(binding.btnStartTest)
+                            .show()
+                    }
+                    is TestViewModel.AllEvents.Message -> {
+                        Snackbar
+                            .make(binding.root, getString(event.messageRes), Snackbar.LENGTH_LONG)
                             .setAnchorView(binding.btnStartTest)
                             .show()
                     }

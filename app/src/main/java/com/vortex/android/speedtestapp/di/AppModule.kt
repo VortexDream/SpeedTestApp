@@ -5,7 +5,12 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
+import com.google.firebase.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.storage
 import com.vortex.android.speedtestapp.PreferencesRepository
+import com.vortex.android.speedtestapp.firebase.BaseStorage
+import com.vortex.android.speedtestapp.firebase.OnlineStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,5 +37,17 @@ object AppModule {
     @Provides
     fun providePreferencesRepository(dataStore: DataStore<Preferences>) : PreferencesRepository {
         return PreferencesRepository(dataStore)
+    }
+
+    @Singleton
+    @Provides
+    fun provideFirebaseStorage() : FirebaseStorage {
+        return Firebase.storage
+    }
+
+    @Singleton
+    @Provides
+    fun provideStorage(firebaseStorage: FirebaseStorage) : BaseStorage {
+        return OnlineStorage(firebaseStorage)
     }
 }

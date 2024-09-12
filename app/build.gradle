@@ -5,6 +5,7 @@ plugins {
     id ("androidx.navigation.safeargs")
     id ("com.google.devtools.ksp")
     id ("dagger.hilt.android.plugin")
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -53,6 +54,7 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-service:2.6.2")
     implementation ("androidx.lifecycle:lifecycle-process:2.6.2")
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.2'
+    implementation libs.firebase.storage
 
     testImplementation ("junit:junit:4.13.2")
     androidTestImplementation ("androidx.test.ext:junit:1.1.5")
