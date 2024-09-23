@@ -187,7 +187,7 @@ class TestViewModel @Inject constructor(
                         viewModelScope.launch { //Обрабатываем проблемы с соединением и закрываем задачу при надобности
                             delay(2000)
                             eventsChannel.send(AllEvents.Message(R.string.message_connection_pending))
-                            delay(15000)
+                            delay(20000)
                             if (instUploadSpeed.value == "0,00") {
                                 isTestOngoing.value = false
                                 flagConnectionPending = false

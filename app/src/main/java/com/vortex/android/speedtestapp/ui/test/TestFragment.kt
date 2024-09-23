@@ -111,10 +111,15 @@ class TestFragment : Fragment() {
                     //Включаем видимость интерфейса только после начала теста
                     visibilityGroup.isVisible = true
                     testViewModel.run { //Обнуляем значения скоростей с началом нового теста
-                        instUploadSpeed.value = ""
                         instDownloadSpeed.value = ""
-                        averageUploadSpeed.value = ""
                         averageDownloadSpeed.value = ""
+                        if (testViewModel.uploadPref != null && testViewModel.uploadPref!!) {
+                            averageUploadSpeed.value = "-"
+                            instUploadSpeed.value = "-"
+                        } else {
+                            averageUploadSpeed.value = "¯\\_(ツ)_/¯"
+                            instUploadSpeed.value = "¯\\_(ツ)_/¯"
+                        }
                         downloadUrlTextview.text = "Download URL: ${testViewModel.downloadUrl}"
                         uploadUrlTextview.text = "Upload URL: ${testViewModel.uploadUrl}"
                     }
@@ -124,11 +129,22 @@ class TestFragment : Fragment() {
                     visibilityGroup.isVisible = true
                     testViewModel.run {
                         instUploadSpeed.value = ""
+                        instDownloadSpeed.value = "¯\\_(ツ)_/¯"
+                        averageUploadSpeed.value = ""
+                        averageDownloadSpeed.value = "¯\\_(ツ)_/¯"
+                    }
+                    testViewModel.startUploadTest() //Запускаем тест отдачи
+                } else {
+                    Snackbar
+                        .make(binding.root, getString(R.string.error_choose_settings), Snackbar.LENGTH_SHORT)
+                        .setAnchorView(binding.btnStartTest)
+                        .show()
+                    testViewModel.run {
+                        instUploadSpeed.value = ""
                         instDownloadSpeed.value = ""
                         averageUploadSpeed.value = ""
                         averageDownloadSpeed.value = ""
                     }
-                    testViewModel.startUploadTest() //Запускаем тест отдачи
                 }
             }
         }
