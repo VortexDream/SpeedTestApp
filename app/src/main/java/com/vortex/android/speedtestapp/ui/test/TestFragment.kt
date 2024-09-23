@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,6 +17,7 @@ import com.vortex.android.speedtestapp.databinding.FragmentTestBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+
 
 //Первый экран приложения, тест скорости происходит здесь
 @AndroidEntryPoint
@@ -157,22 +159,37 @@ class TestFragment : Fragment() {
                 when(event){
                     is TestViewModel.AllEvents.Error -> {
                         //Выводим сообщение об ошибке тестирования
-                        Snackbar
-                            .make(binding.root, getString(R.string.error_connection), Snackbar.LENGTH_SHORT)
-                            .setAnchorView(binding.btnStartTest)
-                            .show()
+                        val snackbar: Snackbar = Snackbar
+                                .make(binding.root, getString(R.string.error_connection), Snackbar.LENGTH_SHORT)
+                                .setAnchorView(binding.btnStartTest)
+                        val snackbarView = snackbar.view
+                        val snackTextView =
+                            snackbarView.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
+
+                        snackTextView.maxLines = 3
+                        snackbar.show()
                     }
                     is TestViewModel.AllEvents.Success -> {
-                        Snackbar
+                        val snackbar: Snackbar = Snackbar
                             .make(binding.root, getString(event.successRes), Snackbar.LENGTH_SHORT)
                             .setAnchorView(binding.btnStartTest)
-                            .show()
+                        val snackbarView = snackbar.view
+                        val snackTextView =
+                            snackbarView.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
+
+                        snackTextView.maxLines = 3
+                        snackbar.show()
                     }
                     is TestViewModel.AllEvents.Message -> {
-                        Snackbar
+                        val snackbar: Snackbar = Snackbar
                             .make(binding.root, getString(event.messageRes), Snackbar.LENGTH_LONG)
                             .setAnchorView(binding.btnStartTest)
-                            .show()
+                        val snackbarView = snackbar.view
+                        val snackTextView =
+                            snackbarView.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
+
+                        snackTextView.maxLines = 3
+                        snackbar.show()
                     }
                 }
             }

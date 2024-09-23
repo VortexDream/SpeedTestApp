@@ -8,12 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.storage.FirebaseStorage
 import com.vortex.android.speedtestapp.PreferencesRepository
 import com.vortex.android.speedtestapp.R
-import com.vortex.android.speedtestapp.firebase.BaseStorage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import fr.bmartel.speedtest.SpeedTestReport
 import fr.bmartel.speedtest.SpeedTestSocket
 import fr.bmartel.speedtest.inter.ISpeedTestListener
 import fr.bmartel.speedtest.model.SpeedTestError
+import fr.bmartel.speedtest.utils.SpeedTestUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
@@ -32,7 +32,10 @@ class TestViewModel @Inject constructor(
 ) : ViewModel() {
 
     var downloadUrl = ""
-    var uploadUrl = "http://speedtest.tele2.net/upload.php"
+    //var uploadUrl = "http://speedtest.tele2.net/upload.php"
+    private var fileName: String? = SpeedTestUtils.generateFileName() + ".txt"
+    @SuppressLint("AuthLeak")
+    var uploadUrl = "ftp://dlpuser:rNrKYTX9g7z3RgJRmxWuGHbeu@ftp.dlptest.com/$fileName"
 
     //Создаем канал для прослушивания событий
     private val eventsChannel = Channel<AllEvents>()
@@ -187,7 +190,7 @@ class TestViewModel @Inject constructor(
                         viewModelScope.launch { //Обрабатываем проблемы с соединением и закрываем задачу при надобности
                             delay(2000)
                             eventsChannel.send(AllEvents.Message(R.string.message_connection_pending))
-                            delay(20000)
+                            delay(30000)
                             if (instUploadSpeed.value == "0,00") {
                                 isTestOngoing.value = false
                                 flagConnectionPending = false

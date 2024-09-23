@@ -11,7 +11,7 @@
     <string name="error_connection">Ошибка соединения</string>
     <string name="success_download">Тест загрузки завершен успешно</string>
     <string name="success_upload">Тест отдачи завершен успешно</string>
-    <string name="message_connection_pending">Устанавливаем соединение c сервером отдачи…\nЭто может занять некоторое время.</string>
+    <string name="message_connection_pending">Устанавливаем соединение c сервером отдачи…Это может занять до 30 сек. После этого тест будет автоматически прекращен.</string>
     <string name="message_connection_pending_download">Устанавливаем соединение c сервером загрузки…</string>
     <string name="error_choose_settings">Выберите тип соединения, которое вы хотите проверить!</string>
     <string name="theme">Тема</string>
