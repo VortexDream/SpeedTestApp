@@ -87,6 +87,7 @@ class TestViewModel @Inject constructor(
         //Работаем с сетью на IO потоке
         viewModelScope.launch(Dispatchers.IO) {
 
+            var flagConnectionPending = false
             //Создаём объект
             val speedTestSocket = SpeedTestSocket()
 
@@ -112,7 +113,7 @@ class TestViewModel @Inject constructor(
                     }
                 }
 
-                //Событие ощибки
+                //Событие ошибки
                 override fun onError(speedTestError: SpeedTestError, errorMessage: String) {
                     viewModelScope.launch {
                         //Отправляем событие ошибки в канал
@@ -126,6 +127,18 @@ class TestViewModel @Inject constructor(
                 override fun onProgress(percent: Float, report: SpeedTestReport) {
                     //Выводим мгновенную скорость
                     instDownloadSpeed.value = String.format("%.2f", report.transferRateBit.toDouble()/(1024*1024))
+                    if (instDownloadSpeed.value == "0,00" && !flagConnectionPending) {
+                        flagConnectionPending = true
+                        viewModelScope.launch { //Обрабатываем проблемы с соединением и закрываем задачу при надобности
+                            eventsChannel.send(AllEvents.Message(R.string.message_connection_pending_download))
+                            delay(3000)
+                            if (instDownloadSpeed.value == "0,00") {
+                                isTestOngoing.value = false
+                                flagConnectionPending = false
+                                speedTestSocket.forceStopTask()
+                            }
+                        }
+                    }
                 }
             })
             //Старт самого теста, выставляем интервал срабатывания onProgress на 200 мс
@@ -136,6 +149,8 @@ class TestViewModel @Inject constructor(
 
     //Аналогично startDownloadTest()
     fun startUploadTest() {
+        isTestOngoing.value = true
+
         viewModelScope.launch(Dispatchers.IO) {
             val speedTestSocket = SpeedTestSocket()
             var flagConnectionPending = false
@@ -169,9 +184,15 @@ class TestViewModel @Inject constructor(
                     //Выводим сообщение об установке соединения, чтобы пользователь не подумал, что зависло
                     if (instUploadSpeed.value == "0,00" && !flagConnectionPending) {
                         flagConnectionPending = true
-                        viewModelScope.launch {
+                        viewModelScope.launch { //Обрабатываем проблемы с соединением и закрываем задачу при надобности
                             delay(2000)
                             eventsChannel.send(AllEvents.Message(R.string.message_connection_pending))
+                            delay(15000)
+                            if (instUploadSpeed.value == "0,00") {
+                                isTestOngoing.value = false
+                                flagConnectionPending = false
+                                speedTestSocket.forceStopTask()
+                            }
                         }
                     }
                 }
