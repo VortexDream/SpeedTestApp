@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".ui.test.TestFragment">
+
+    <TextView
+        android:id="@+id/download_url_textview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:text="TEST URL"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/speed_text_view_2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/upload_url_textview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="16dp"
+        android:text="TEST URL"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/download_url_textview"
+        app:layout_constraintStart_toStartOf="@+id/download_url_textview"
+        app:layout_constraintTop_toBottomOf="@id/download_url_textview" />
+
+    <ImageView
+        android:id="@+id/ic_upload"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:background="@color/transparent"
+        android:cropToPadding="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_upload"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/upload_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/upload_text_view"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_upload"
+        app:layout_constraintStart_toEndOf="@+id/ic_upload"
+        app:layout_constraintTop_toTopOf="@+id/ic_upload" />
+
+    <TextView
+        android:id="@+id/speed_text_view_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/speed_text_view"
+        android:textSize="14sp"
+        android:layout_marginStart="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/upload_text_view"
+        app:layout_constraintStart_toEndOf="@+id/upload_text_view"
+        app:layout_constraintTop_toTopOf="@+id/upload_text_view" />
+
+
+    <ImageView
+        android:id="@+id/ic_download"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@color/transparent"
+        android:cropToPadding="true"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_download"
+        android:layout_marginStart="64dp"
+        app:layout_constraintBottom_toBottomOf="@+id/speed_text_view_1"
+        app:layout_constraintStart_toEndOf="@id/speed_text_view_1"
+        app:layout_constraintTop_toTopOf="@+id/speed_text_view_1" />
+
+    <TextView
+        android:id="@+id/download_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/download_text_view"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_download"
+        app:layout_constraintStart_toEndOf="@id/ic_download"
+        app:layout_constraintTop_toTopOf="@+id/ic_download" />
+
+    <TextView
+        android:id="@+id/speed_text_view_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/speed_text_view"
+        android:textSize="14sp"
+        android:layout_marginStart="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/download_text_view"
+        app:layout_constraintStart_toEndOf="@+id/download_text_view"
+        app:layout_constraintTop_toTopOf="@+id/download_text_view" />
+
+    <TextView
+        android:id="@+id/inst_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/inst_text_view"
+        app:layout_constraintEnd_toEndOf="@+id/inst_download_speed"
+        app:layout_constraintStart_toStartOf="@+id/inst_upload_speed"
+        app:layout_constraintTop_toBottomOf="@+id/upload_text_view" />
+
+    <TextView
+        android:id="@+id/inst_upload_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="X"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/speed_text_view_1"
+        app:layout_constraintStart_toEndOf="@+id/ic_upload"
+        app:layout_constraintTop_toBottomOf="@+id/inst_text_view" />
+
+    <TextView
+        android:id="@+id/inst_download_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="X"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/speed_text_view_2"
+        app:layout_constraintStart_toEndOf="@+id/ic_download"
+        app:layout_constraintTop_toBottomOf="@+id/inst_text_view" />
+
+    <TextView
+        android:id="@+id/average_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/average_text_view"
+        app:layout_constraintEnd_toEndOf="@+id/average_download_speed"
+        app:layout_constraintStart_toStartOf="@+id/average_upload_speed"
+        app:layout_constraintTop_toBottomOf="@+id/inst_download_speed" />
+
+    <TextView
+        android:id="@+id/average_upload_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="X"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/speed_text_view_1"
+        app:layout_constraintStart_toEndOf="@+id/ic_upload"
+        app:layout_constraintTop_toBottomOf="@+id/average_text_view" />
+
+    <TextView
+        android:id="@+id/average_download_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="X"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/speed_text_view_2"
+        app:layout_constraintStart_toEndOf="@+id/ic_download"
+        app:layout_constraintTop_toBottomOf="@+id/average_text_view" />
+
+    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_start_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="64dp" />-->
+
+    <Button
+        android:id="@+id/btn_start_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_speed_test"
+        android:paddingVertical="16dp"
+        android:layout_marginBottom="64dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/visibility_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="average_download_speed,
+        average_upload_speed,
+        average_text_view,
+        inst_download_speed,
+        inst_text_view,
+        inst_upload_speed,
+        speed_text_view_1,
+        speed_text_view_2,
+        download_text_view,ic_download,
+        ic_upload,
+        upload_text_view,
+        download_url_textview,
+        upload_url_textview"
+        android:visibility="visible"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
